@@ -170,3 +170,10 @@ button {
   left: 100%;
   transition-delay: 0s;
 }
+
+/* estilização da lista de tarefas */
+
+.taskContainer{
+  border: solid black 1px;
+  padding: 4rem;
+}
