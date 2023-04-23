@@ -8,22 +8,17 @@ export default function App() {
   moment.tz.setDefault("America/Sao_Paulo");
   moment.locale("pt-br");
   const now = moment();
-  const [formattedTime, setFormattedTime] = useState(now.format("dddd, DD [de] MMM"));
+  const [formattedTime, setFormattedTime] = useState(
+    now.format("dddd, DD [de] MMM")
+  );
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const time = moment();
-      const formatted = time.format("dddd, DD [de] MMM");
-      setFormattedTime(formatted);
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
-  // White part movement effect
-  useEffect(() => {
+    // White part movement effect
     const yourList = document.querySelector(".addBtn");
     const doneList = document.querySelector(".gobackBtn");
     const listBx = document.querySelector(".listBx");
     const body = document.querySelector("body");
+
     yourList.onclick = function () {
       listBx.classList.add("active");
       body.classList.add("active");
@@ -32,7 +27,12 @@ export default function App() {
       listBx.classList.remove("active");
       body.classList.remove("active");
     };
-  }, []);
+    //to-do to done effect
+    const cardMovement = document.querySelector(".sendTaskBtn");
+      cardMovement.onclick = function () {
+      listBx.classList.add("active");
+    };
+  },  []);
 
   // To do list part
   const [data, setData] = useState(() => {
@@ -62,24 +62,31 @@ export default function App() {
       <div className="container">
         <div className="bg-bx">
           <div className="box your-todo">
-            <h2>Suas Tarefas</h2>
-            <button className="addBtn">
-              <img src="./images/add.svg" />
-            </button>
-          </div>
-          <div className="box preview-bx">
-            <h2>Preview</h2>
+            <div id="">
+              <h2>Suas Tarefas</h2>
+              <button className="addBtn">
+                <img src="./images/add.svg" />
+              </button>
+            </div>
             <div>
-              {data.map((item, index) => {
+              {data.map((item) => {
                 const key = item.title + "-" + item.description;
                 return (
                   <div className="taskContainer" key={key}>
-                    <p className="Title">{item.title}</p>
-                    <p className="description">{item.description}</p>
+                    <button id="none-checked">
+                      <img src="./images/Vector.svg" />
+                    </button>
+                    <div className="texts">
+                      <p className="Title">{item.title}</p>
+                      <p className="description">{item.description}</p>
+                    </div>
                   </div>
                 );
               })}
             </div>
+          </div>
+          <div className="box preview-bx">
+            <h2>Preview</h2>
           </div>
         </div>
         <div className="listBx">
@@ -98,6 +105,7 @@ export default function App() {
                 value={newTitle}
                 onChange={(event) => setNewTitle(event.target.value)}
                 placeholder="Titulo"
+                maxlength="20"
               />
               <input
                 type="text"
@@ -106,7 +114,7 @@ export default function App() {
                 placeholder="descrição"
               />
               {/* <input type="time" name="date" /> */}
-              <button type="submit" id="sendTaskBtn">
+              <button type="submit" className="sendTaskBtn">
                 <img src="./images/send.svg" />
               </button>
             </form>

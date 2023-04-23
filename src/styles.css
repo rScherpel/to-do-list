@@ -60,6 +60,8 @@ body.active {
   display: flex;
   align-items: center;
   flex-direction: column;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .bg-bx .box h2 {
@@ -86,6 +88,13 @@ button {
   align-items: center;
   justify-content: center;
   color: black;
+}
+
+#none-checked{
+  cursor: pointer;
+  border-radius: 0;
+  padding: 0;
+  margin: 0 1rem 0 0;
 }
 
 .listBx {
@@ -185,12 +194,16 @@ button {
   margin: 1rem;
   border-radius: 1rem;
   display:flex;
-  align-content: center;
+  align-items: center;
   padding: 1rem;
-  flex-direction: column;
-  align-items: flex-start;
-  /* background: #61c9ef; */
-  background: #f9879f;
+  transition: 0.5s;
+  background: #61c9ef;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
   color: white;
+  white-space: pre-line;  
 }
+
+ /* .taskContainer {
+  transition: 0.5s;
+  background: #f9879f;
+} */
