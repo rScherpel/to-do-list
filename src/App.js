@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import moment from "moment-timezone";
 import "moment/locale/pt-br";
+import Accordion from "./components/accordion";
 
 export default function App() {
   moment.tz.setDefault("America/Sao_Paulo");
@@ -29,10 +30,10 @@ export default function App() {
     };
     //to-do to done effect
     const cardMovement = document.querySelector(".sendTaskBtn");
-      cardMovement.onclick = function () {
+    cardMovement.onclick = function () {
       listBx.classList.add("active");
     };
-  },  []);
+  }, []);
 
   // To do list part
   const [data, setData] = useState(() => {
@@ -77,8 +78,7 @@ export default function App() {
                       <img src="./images/Vector.svg" />
                     </button>
                     <div className="texts">
-                      <p className="Title">{item.title}</p>
-                      <p className="description">{item.description}</p>
+                      <Accordion title={item.title} content={item.description} />
                     </div>
                   </div>
                 );
@@ -87,6 +87,10 @@ export default function App() {
           </div>
           <div className="box preview-bx">
             <h2>Preview</h2>
+            <div>
+              <Accordion title="Item 2" content="Conteúdo do item 2" />
+              <Accordion title="Item 3" content="Conteúdo do item 3" />
+            </div>
           </div>
         </div>
         <div className="listBx">
