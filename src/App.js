@@ -1,9 +1,23 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "./styles.css";
+import moment from "moment-timezone";
+import "moment/locale/pt-br";
 
 export default function App() {
-  
+  moment.tz.setDefault("America/Sao_Paulo");
+  moment.locale("pt-br");
+  const now = moment();
+  const [formattedTime, setFormattedTime] = useState(now.format("dddd, DD [de] MMM"));
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const time = moment();
+      const formatted = time.format("dddd, DD [de] MMM");
+      setFormattedTime(formatted);
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
   // White part movement effect
   useEffect(() => {
     const yourList = document.querySelector(".addBtn");
@@ -31,66 +45,76 @@ export default function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setData([...data, { title: newTitle, description: newDescription }]);
-    setNewTitle();
-    setNewDescription();
-    localStorage.setItem("data", JSON.stringify([...data, { title: newTitle, description: newDescription }]));
+    setNewTitle("");
+    setNewDescription("");
+    localStorage.setItem(
+      "data",
+      JSON.stringify([
+        ...data,
+        { title: newTitle, description: newDescription },
+      ])
+    );
   };
+
   return (
-    <div className="container">
-      <div className="bg-bx">
-        <div className="box your-todo">
-          <h2>Suas Tarefas</h2>
-          <button className="addBtn">
-            <img src="./images/add.svg" />
-          </button>
-        </div>
-        <div className="box preview-bx">
-          <h2>Preview</h2>
-          <div>
-            {data.map((item, index) => {
-              const key = item.title + "-" + item.description;
-              return (
-                <div className="taskContainer" key={key}>
-                  <p className="Title">{item.title}</p>
-                  <p className="description">{item.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-      <div className="listBx">
-        <div className="form make-todo">
-          <div id="header-btn">
-            <button className="gobackBtn">
-              <img src="./images/arrow-left.svg" />
+    <div className="App">
+      <h1 id="clock">{formattedTime}</h1>
+      <div className="container">
+        <div className="bg-bx">
+          <div className="box your-todo">
+            <h2>Suas Tarefas</h2>
+            <button className="addBtn">
+              <img src="./images/add.svg" />
             </button>
           </div>
-          <div id="header-title">
-            <h2>Criar Tarefa</h2>
+          <div className="box preview-bx">
+            <h2>Preview</h2>
+            <div>
+              {data.map((item, index) => {
+                const key = item.title + "-" + item.description;
+                return (
+                  <div className="taskContainer" key={key}>
+                    <p className="Title">{item.title}</p>
+                    <p className="description">{item.description}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              value={newTitle}
-              onChange={(event) => setNewTitle(event.target.value)}
-              placeholder="Titulo"
-            />
-            <input
-              type="text"
-              value={newDescription}
-              onChange={(event) => setNewDescription(event.target.value)}
-              placeholder="descrição"
-            />
-            {/* <input type="time" name="date" /> */}
-            <button type="submit" id="sendTaskBtn">
-              <img src="./images/send.svg" />
-            </button>
-          </form>
         </div>
-        <div className="done-todo">
-          <h2>Tarefas feitas</h2>
-          <button></button>
+        <div className="listBx">
+          <div className="form make-todo">
+            <div id="header-btn">
+              <button className="gobackBtn">
+                <img src="./images/arrow-left.svg" />
+              </button>
+            </div>
+            <div id="header-title">
+              <h2>Criar Tarefa</h2>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                value={newTitle}
+                onChange={(event) => setNewTitle(event.target.value)}
+                placeholder="Titulo"
+              />
+              <input
+                type="text"
+                value={newDescription}
+                onChange={(event) => setNewDescription(event.target.value)}
+                placeholder="descrição"
+              />
+              {/* <input type="time" name="date" /> */}
+              <button type="submit" id="sendTaskBtn">
+                <img src="./images/send.svg" />
+              </button>
+            </form>
+          </div>
+          <div className="done-todo">
+            <h2>Tarefas feitas</h2>
+            <button></button>
+          </div>
         </div>
       </div>
     </div>
