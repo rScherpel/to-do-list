@@ -87,10 +87,6 @@ export default function App() {
           </div>
           <div className="box preview-bx">
             <h2>Preview</h2>
-            <div>
-              <Accordion title="Item 2" content="Conteúdo do item 2" />
-              <Accordion title="Item 3" content="Conteúdo do item 3" />
-            </div>
           </div>
         </div>
         <div className="listBx">
