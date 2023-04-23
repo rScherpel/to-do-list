@@ -197,7 +197,7 @@ button {
   align-items: center;
   padding: 1rem;
   transition: 0.5s;
-  background: #61c9ef;
+  background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
   color: white;
   white-space: pre-line;  
