@@ -24,6 +24,12 @@ body {
   transition: 0.5s;
 }
 
+#clock{
+  color: white;
+  font-size: 1.5rem;
+  padding-left: 1rem;
+}
+
 body.active {
   background: var(--active-boody-bg);
 }
@@ -174,6 +180,17 @@ button {
 /* estilização da lista de tarefas */
 
 .taskContainer{
-  border: solid black 1px;
-  padding: 4rem;
+  /* border: solid black 1px; */
+  width: 17rem;
+  margin: 1rem;
+  border-radius: 1rem;
+  display:flex;
+  align-content: center;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  /* background: #61c9ef; */
+  background: #f9879f;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+  color: white;
 }
