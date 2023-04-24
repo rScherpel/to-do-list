@@ -4,6 +4,7 @@ import "./styles.css";
 import moment from "moment-timezone";
 import "moment/locale/pt-br";
 import Accordion from "./components/accordion";
+import TaskCreator from "./components/taskCreator";
 
 export default function App() {
   moment.tz.setDefault("America/Sao_Paulo");
@@ -42,20 +43,27 @@ export default function App() {
   });
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
+  const [newTime, setNewTime] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setData([...data, { title: newTitle, description: newDescription }]);
+    setData([
+      ...data,
+      { title: newTitle, time: newTime || "", description: newDescription },
+    ]);
     setNewTitle("");
     setNewDescription("");
+    setNewTime("");
     localStorage.setItem(
       "data",
       JSON.stringify([
         ...data,
-        { title: newTitle, description: newDescription },
+        { title: newTitle, time: newTime || "", description: newDescription },
       ])
     );
   };
+
+  //Preview Logic
 
   return (
     <div className="App">
@@ -63,7 +71,7 @@ export default function App() {
       <div className="container">
         <div className="bg-bx">
           <div className="box your-todo">
-            <div id="">
+            <div id="your-todo-header">
               <h2>Suas Tarefas</h2>
               <button className="addBtn">
                 <img src="./images/add.svg" />
@@ -71,14 +79,19 @@ export default function App() {
             </div>
             <div>
               {data.map((item) => {
-                const key = item.title + "-" + item.description;
+                const key =
+                  item.title + "-" + item.time + "-" + item.description;
                 return (
                   <div className="taskContainer" key={key}>
                     <button id="none-checked">
                       <img src="./images/Vector.svg" />
                     </button>
                     <div className="texts">
-                      <Accordion title={item.title} content={item.description} />
+                      <Accordion
+                        title={`${item.title} ${item.time}`}
+                        content={item.description}
+                        className="accordion-item"
+                      />
                     </div>
                   </div>
                 );
@@ -88,6 +101,7 @@ export default function App() {
           <div className="box preview-bx">
             <h2>Preview</h2>
           </div>
+              {/* <TaskCreator/> */}
         </div>
         <div className="listBx">
           <div className="form make-todo">
@@ -105,7 +119,7 @@ export default function App() {
                 value={newTitle}
                 onChange={(event) => setNewTitle(event.target.value)}
                 placeholder="Titulo"
-                maxlength="20"
+                maxlength="15"
               />
               <input
                 type="text"
@@ -113,7 +127,11 @@ export default function App() {
                 onChange={(event) => setNewDescription(event.target.value)}
                 placeholder="descrição"
               />
-              {/* <input type="time" name="date" /> */}
+              <input
+                type="time"
+                value={newTime}
+                onChange={(event) => setNewTime(event.target.value)}
+              />
               <button type="submit" className="sendTaskBtn">
                 <img src="./images/send.svg" />
               </button>
