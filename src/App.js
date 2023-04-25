@@ -4,7 +4,6 @@ import "./styles.css";
 import moment from "moment-timezone";
 import "moment/locale/pt-br";
 import Accordion from "./components/accordion";
-import TaskCreator from "./components/taskCreator";
 
 export default function App() {
   moment.tz.setDefault("America/Sao_Paulo");
@@ -63,8 +62,6 @@ export default function App() {
     );
   };
 
-  //Preview Logic
-
   return (
     <div className="App">
       <h1 id="clock">{formattedTime}</h1>
@@ -99,9 +96,8 @@ export default function App() {
             </div>
           </div>
           <div className="box preview-bx">
-            <h2>Preview</h2>
+            <h2>Dicas</h2>
           </div>
-              {/* <TaskCreator/> */}
         </div>
         <div className="listBx">
           <div className="form make-todo">
@@ -139,7 +135,9 @@ export default function App() {
           </div>
           <div className="done-todo">
             <h2>Tarefas feitas</h2>
-            <button></button>
+            <button type="submit" className="sendTaskBtn">
+              <img src="./images/trash.svg" />
+            </button>
           </div>
         </div>
       </div>
