@@ -26,9 +26,9 @@ function Accordion(props) {
       >
         {!contentIsEmpty &&
           (isOpen ? (
-            <img src="./images/arrow-down.svg" alt="seta para baixo" />
+            <img src="./images/arrow-up.svg" />
           ) : (
-            <img src="./images/arrow-up.svg" alt="seta para cima" />
+            <img src="./images/arrow-down.svg" />
           ))}
       </div>
     </div>
