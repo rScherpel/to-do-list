@@ -115,7 +115,8 @@ button {
   align-items: center;
   box-shadow: 0 5px 45px rgba(0, 0, 0, 0.25);
   transition: 0.5s ease-in-out;
-  overflow: hidden;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .listBx.active {
@@ -199,10 +200,10 @@ button {
 .done-todo {
   display: flex;
   align-items: center;
-  gap: 5.5rem;
   margin-top: 0.5rem;
   position: absolute;
   top: 0;
+  flex-direction: column;
 }
 
 .done-todo h2 {
@@ -227,6 +228,12 @@ button {
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+}
+
+.done-header{
+  display: flex;
+  align-items: center;
+  gap: 5rem;
 }
 
 /* estilização da lista de tarefas */
