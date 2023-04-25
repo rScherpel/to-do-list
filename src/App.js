@@ -95,8 +95,15 @@ export default function App() {
               })}
             </div>
           </div>
-          <div className="box preview-bx">
-            <h2>Dicas</h2>
+          <div className="box hint-bx">
+            <h2>Dica</h2>
+            <p>
+              Divida seu "projeto” em todas as tarefas que serão necessárias, de
+              preferencia pequenas tarefas.
+              <br /><br/>
+              Tarefas grandes causam maior estresse mental.
+            </p>
+            <div className="image-container"><img src="./images/help_image.svg" /></div>
           </div>
         </div>
         <div className="listBx">
