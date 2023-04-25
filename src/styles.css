@@ -211,6 +211,24 @@ button {
   font-weight: 500;
 }
 
+.hint-bx p{
+  color: var(--white);
+  font-size: 0.8rem;
+  padding:  0.5rem 1.2rem;
+}
+
+.hint-bx{
+  justify-content: center;  
+}
+
+.image-container{
+  /* border: solid 1px black; */
+  margin: 1.2rem 1rem 0rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+}
+
 /* estilização da lista de tarefas */
 
 .taskContainer {
