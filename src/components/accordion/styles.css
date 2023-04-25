@@ -1,10 +1,9 @@
-.accordion{
-    display: flex;
-    align-items: center;
-    gap:9rem;
+.accordion {
+  display: flex;
+  align-items: center;
 }
 
-.arrow{
-    display: flex;
-    flex-direction: column;
+.arrow {
+  display: flex;
+  flex-direction: column;
 }
