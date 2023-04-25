@@ -9,9 +9,7 @@ export default function App() {
   moment.tz.setDefault("America/Sao_Paulo");
   moment.locale("pt-br");
   const now = moment();
-  const [formattedTime, setFormattedTime] = useState(
-    now.format("dddd, DD [de] MMM")
-  );
+  const [formattedTime] = useState(now.format("dddd, DD [de] MMM"));
 
   useEffect(() => {
     // White part movement effect
@@ -62,6 +60,27 @@ export default function App() {
     );
   };
 
+  const [trash, setTrash] = useState([]);
+
+  const handleRemove = (index) => {
+    const newData = [...data];
+    const removed = newData.splice(index, 1);
+    setData(newData);
+    setTrash([...trash, removed[0]]);
+    localStorage.setItem("data", JSON.stringify(newData));
+    localStorage.setItem("trash", JSON.stringify([...trash, removed[0]]));
+  };
+
+  const handleRestore = (index) => {
+    setData([...data, trash[index]]);
+    setTrash((prevTrash) => {
+      const newTrash = [...prevTrash];
+      newTrash.splice(index, 1);
+      return newTrash;
+    });
+    localStorage.setItem("data", JSON.stringify([...data, trash[index]]));
+    localStorage.setItem("trash", JSON.stringify(trash));
+  };
   return (
     <div className="App">
       <h1 id="clock">{formattedTime}</h1>
@@ -75,12 +94,15 @@ export default function App() {
               </button>
             </div>
             <div>
-              {data.map((item) => {
+              {data.map((item, index) => {
                 const key =
                   item.title + "-" + item.time + "-" + item.description;
                 return (
                   <div className="taskContainer" key={key}>
-                    <button id="none-checked">
+                    <button
+                      id="none-checked"
+                      onClick={() => handleRemove(index)}
+                    >
                       <img src="./images/Vector.svg" />
                     </button>
                     <div className="texts">
@@ -149,6 +171,32 @@ export default function App() {
               <button type="submit" className="sendTaskBtn">
                 <img src="./images/trash.svg" />
               </button>
+            </div>
+            <div>
+              {trash.map((item, index) => {
+                const key =
+                  item.title + "-" + item.time + "-" + item.description;
+                return (
+                  <div className="taskContainer" key={key}>
+                    <button
+                      id="none-checked"
+                      onClick={() => handleRestore(index)}
+                    >
+                      <img src="./images/Vector-checked.svg" />
+                    </button>
+                    <div className="texts">
+                      <Accordion
+                        title={`${item.title} ${item.time}`}
+                        content={item.description}
+                        className="accordion-item"
+                      />
+                    </div>
+                    <button type="submit" id="unique-remove">
+                      <img src="./images/trash.svg" />
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
