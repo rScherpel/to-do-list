@@ -100,10 +100,13 @@ export default function App() {
             <p>
               Divida seu "projeto” em todas as tarefas que serão necessárias, de
               preferencia pequenas tarefas.
-              <br /><br/>
+              <br />
+              <br />
               Tarefas grandes causam maior estresse mental.
             </p>
-            <div className="image-container"><img src="./images/help_image.svg" /></div>
+            <div className="image-container">
+              <img src="./images/help_image.svg" />
+            </div>
           </div>
         </div>
         <div className="listBx">
@@ -141,10 +144,12 @@ export default function App() {
             </form>
           </div>
           <div className="done-todo">
-            <h2>Tarefas feitas</h2>
-            <button type="submit" className="sendTaskBtn">
-              <img src="./images/trash.svg" />
-            </button>
+            <div className="done-header">
+              <h2>Tarefas feitas</h2>
+              <button type="submit" className="sendTaskBtn">
+                <img src="./images/trash.svg" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
