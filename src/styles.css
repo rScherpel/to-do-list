@@ -252,6 +252,11 @@ button {
   white-space: pre-line;
 }
 
+.taskContainer .texts{
+  color: var(--black);
+  font-size: 1rem;
+}
+
 /* estilização do accordion */
 
 .accordion-item {
