@@ -4,6 +4,7 @@ import "./styles.css";
 import moment from "moment-timezone";
 import "moment/locale/pt-br";
 import Accordion from "./components/accordion";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function App() {
   //Clock
@@ -30,78 +31,88 @@ export default function App() {
   }, []);
 
   // Making a task
-  const [data, setData] = useState(() => {
-    const storedData = localStorage.getItem("data");
-    return storedData ? JSON.parse(storedData) : [];
-  });
-  const [newTitle, setNewTitle] = useState("");
-  const [newDescription, setNewDescription] = useState("");
-  const [newTime, setNewTime] = useState("");
+const [data, setData] = useState(() => {
+  const storedData = localStorage.getItem("data");
+  return storedData ? JSON.parse(storedData) : [];
+});
+const [newTitle, setNewTitle] = useState("");
+const [newDescription, setNewDescription] = useState("");
+const [newTime, setNewTime] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setData([
-      ...data,
-      { title: newTitle, time: newTime || "", description: newDescription },
-    ]);
-    setNewTitle("");
-    setNewDescription("");
-    setNewTime("");
-    localStorage.setItem(
-      "data",
-      JSON.stringify([
-        ...data,
-        { title: newTitle, time: newTime || "", description: newDescription },
-      ])
-    );
+const handleSubmit = (event) => {
+  event.preventDefault();
+  const newTask = {
+    id: uuidv4(),
+    title: newTitle,
+    time: newTime || "",
+    description: newDescription,
   };
+  setData([...data, newTask]);
+  setNewTitle("");
+  setNewDescription("");
+  setNewTime("");
+  localStorage.setItem(
+    "data",
+    JSON.stringify([...data, newTask])
+  );
+};
 
-  //array for the tasks that are alredy made
-  const [trash, setTrash] = useState([]);
+//array for the tasks that are already made
+const [trash, setTrash] = useState([]);
 
-  useEffect(() => {
-    const storedTrash = JSON.parse(localStorage.getItem("trash"));
-    console.log("Trash from localStorage:", storedTrash);
-    if (storedTrash) {
-      setTrash(storedTrash);
-    }
-  }, []);
+useEffect(() => {
+  const storedTrash = JSON.parse(localStorage.getItem("trash"));
+  console.log("Trash from localStorage:", storedTrash);
+  if (storedTrash) {
+    setTrash(storedTrash);
+  }
+}, []);
 
-  // Moving from Data array to Trash array
-  const handleCheck = (index) => {
-    const newData = [...data];
-    const removed = newData.splice(index, 1);
-    setData(newData);
-    setTrash([...trash, removed[0]]);
-    localStorage.setItem("data", JSON.stringify(newData));
-    localStorage.setItem("trash", JSON.stringify([...trash, removed[0]]));
-  };
+// Moving from Data array to Trash array
+const handleCheck = (index) => {
+  const newData = [...data];
+  const removed = newData.splice(index, 1);
+  setData(newData);
+  setTrash([...trash, removed[0]]);
+  localStorage.setItem("data", JSON.stringify(newData));
+  localStorage.setItem("trash", JSON.stringify([...trash, removed[0]]));
+};
 
-  //moving from trash to data
-  const handleRestore = (index) => {
-    const newTrash = [...trash];
-    const removed = newTrash.splice(index, 1);
-    setTrash(newTrash);
-    setData([...data, removed[0]]);
-    localStorage.setItem("trash", JSON.stringify(newTrash));
-    localStorage.setItem("data", JSON.stringify([...data, removed[0]]));
-  };
+//moving from trash to data
+const handleRestore = (index) => {
+  const newTrash = [...trash];
+  const removed = newTrash.splice(index, 1);
+  setTrash(newTrash);
+  setData([...data, removed[0]]);
+  localStorage.setItem("trash", JSON.stringify(newTrash));
+  localStorage.setItem("data", JSON.stringify([...data, removed[0]]));
+};
 
-  //delete button
-  const handleRemoveFromLocalStorage = (id) => {
-    const storedData = JSON.parse(localStorage.getItem("data")) || [];
-    const storedTrash = JSON.parse(localStorage.getItem("trash")) || [];
+//delete button
+const removeLsFromData = (id) => {
+  const storedData = JSON.parse(localStorage.getItem("data")) || [];
 
-    const newData = storedData.filter((item) => item.id !== id);
-    const newTrash = storedTrash.filter((item) => item.id !== id);
+  const newData = storedData.filter((item) => item.id !== id);
 
-    localStorage.setItem("data", JSON.stringify(newData));
-    localStorage.setItem("trash", JSON.stringify(newTrash));
-  };
+  localStorage.setItem("data", JSON.stringify(newData));
+};
 
-  const handleUniqueRemove = (id) => {
-    handleRemoveFromLocalStorage(id);
-  };
+const removeLsFromTrash = (id) => {
+  const storedTrash = JSON.parse(localStorage.getItem("trash")) || [];
+
+  const newTrash = storedTrash.filter((item) => item.id !== id);
+
+  localStorage.setItem("trash", JSON.stringify(newTrash));
+};
+
+const handleDataRemove = (id) => {
+  console.log("ID do item a ser removido:", id);
+  removeLsFromData(id);
+};
+
+const handleTrashRemove = (id) => {
+  removeLsFromTrash(id);
+};
 
   return (
     <div className="App">
@@ -117,6 +128,7 @@ export default function App() {
             </div>
             <div>
               {data.map((item, index) => {
+                  console.log(item);
                 const key =
                   item.title + "-" + item.time + "-" + item.description;
                 return (
@@ -137,7 +149,7 @@ export default function App() {
                     <form className="unique-remove">
                       <button
                         type="submit"
-                        onClick={() => handleUniqueRemove(item.id)}
+                        onClick={() => handleDataRemove(item.id)}
                       >
                         <img src="./images/trash.svg" />
                       </button>
@@ -222,7 +234,7 @@ export default function App() {
                     <form className="unique-remove">
                       <button
                         type="submit"
-                        onClick={() => handleUniqueRemove(item.id)}
+                        onClick={() => handleTrashRemove(item.id)}
                       >
                         <img src="./images/trash.svg" />
                       </button>
