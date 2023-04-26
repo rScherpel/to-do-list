@@ -62,6 +62,14 @@ export default function App() {
 
   const [trash, setTrash] = useState([]);
 
+  useEffect(() => {
+    const storedTrash = JSON.parse(localStorage.getItem("trash"));
+    console.log("Trash from localStorage:", storedTrash);
+    if (storedTrash) {
+      setTrash(storedTrash);
+    }
+  }, []);
+
   const handleRemove = (index) => {
     const newData = [...data];
     const removed = newData.splice(index, 1);
@@ -69,18 +77,36 @@ export default function App() {
     setTrash([...trash, removed[0]]);
     localStorage.setItem("data", JSON.stringify(newData));
     localStorage.setItem("trash", JSON.stringify([...trash, removed[0]]));
+    console.log(
+      "Trash in localStorage:",
+      JSON.parse(localStorage.getItem("trash"))
+    );
   };
 
   const handleRestore = (index) => {
-    setData([...data, trash[index]]);
-    setTrash((prevTrash) => {
-      const newTrash = [...prevTrash];
-      newTrash.splice(index, 1);
-      return newTrash;
-    });
-    localStorage.setItem("data", JSON.stringify([...data, trash[index]]));
-    localStorage.setItem("trash", JSON.stringify(trash));
+    const newTrash = [...trash];
+    const removed = newTrash.splice(index, 1);
+    setTrash(newTrash);
+    setData([...data, removed[0]]);
+    localStorage.setItem("trash", JSON.stringify(newTrash));
+    localStorage.setItem("data", JSON.stringify([...data, removed[0]]));
   };
+
+  const handleRemoveFromLocalStorage = (id) => {
+    const storedData = JSON.parse(localStorage.getItem("data")) || [];
+    const storedTrash = JSON.parse(localStorage.getItem("trash")) || [];
+
+    const newData = storedData.filter((item) => item.id !== id);
+    const newTrash = storedTrash.filter((item) => item.id !== id);
+
+    localStorage.setItem("data", JSON.stringify(newData));
+    localStorage.setItem("trash", JSON.stringify(newTrash));
+  };
+
+  const handleUniqueRemove = (id) => {
+    handleRemoveFromLocalStorage(id);
+  };
+
   return (
     <div className="App">
       <h1 id="clock">{formattedTime}</h1>
@@ -112,6 +138,14 @@ export default function App() {
                         className="accordion-item"
                       />
                     </div>
+                    <form className="unique-remove">
+                      <button
+                        type="submit"
+                        onClick={() => handleUniqueRemove(item.id)}
+                      >
+                        <img src="./images/trash.svg" />
+                      </button>
+                    </form>
                   </div>
                 );
               })}
@@ -154,6 +188,7 @@ export default function App() {
                 value={newDescription}
                 onChange={(event) => setNewDescription(event.target.value)}
                 placeholder="descrição"
+                maxlength="30"
               />
               <input
                 type="time"
@@ -168,9 +203,6 @@ export default function App() {
           <div className="done-todo">
             <div className="done-header">
               <h2>Tarefas feitas</h2>
-              <button type="submit" className="sendTaskBtn">
-                <img src="./images/trash.svg" />
-              </button>
             </div>
             <div>
               {trash.map((item, index) => {
@@ -191,9 +223,14 @@ export default function App() {
                         className="accordion-item"
                       />
                     </div>
-                    <button type="submit" id="unique-remove">
-                      <img src="./images/trash.svg" />
-                    </button>
+                    <form className="unique-remove">
+                      <button
+                        type="submit"
+                        onClick={() => handleUniqueRemove(item.id)}
+                      >
+                        <img src="./images/trash.svg" />
+                      </button>
+                    </form>
                   </div>
                 );
               })}
