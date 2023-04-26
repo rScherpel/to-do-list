@@ -89,7 +89,7 @@ const handleRestore = (index) => {
 };
 
 //delete button
-const removeLsFromData = (id) => {
+const removeDataFromLs = (id) => {
   const storedData = JSON.parse(localStorage.getItem("data")) || [];
 
   const newData = storedData.filter((item) => item.id !== id);
@@ -97,21 +97,12 @@ const removeLsFromData = (id) => {
   localStorage.setItem("data", JSON.stringify(newData));
 };
 
-const removeLsFromTrash = (id) => {
+const removeTrashFromLs = (id) => {
   const storedTrash = JSON.parse(localStorage.getItem("trash")) || [];
 
   const newTrash = storedTrash.filter((item) => item.id !== id);
 
   localStorage.setItem("trash", JSON.stringify(newTrash));
-};
-
-const handleDataRemove = (id) => {
-  console.log("ID do item a ser removido:", id);
-  removeLsFromData(id);
-};
-
-const handleTrashRemove = (id) => {
-  removeLsFromTrash(id);
 };
 
   return (
@@ -149,7 +140,7 @@ const handleTrashRemove = (id) => {
                     <form className="unique-remove">
                       <button
                         type="submit"
-                        onClick={() => handleDataRemove(item.id)}
+                        onClick={() => removeDataFromLs(item.id)}
                       >
                         <img src="./images/trash.svg" />
                       </button>
@@ -234,7 +225,7 @@ const handleTrashRemove = (id) => {
                     <form className="unique-remove">
                       <button
                         type="submit"
-                        onClick={() => handleTrashRemove(item.id)}
+                        onClick={() => removeTrashFromLs(item.id)}
                       >
                         <img src="./images/trash.svg" />
                       </button>
