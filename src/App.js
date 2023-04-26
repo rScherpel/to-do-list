@@ -12,8 +12,8 @@ export default function App() {
   const now = moment();
   const [formattedTime] = useState(now.format("dddd, DD [de] MMM"));
 
+  // White part movement effect
   useEffect(() => {
-    // White part movement effect
     const yourList = document.querySelector(".addBtn");
     const doneList = document.querySelector(".gobackBtn");
     const listBx = document.querySelector(".listBx");
@@ -57,7 +57,6 @@ export default function App() {
   };
 
   //array for the tasks that are alredy made
-
   const [trash, setTrash] = useState([]);
 
   useEffect(() => {
@@ -68,9 +67,8 @@ export default function App() {
     }
   }, []);
 
-  //Moving to done logic
-
-  const handleRemove = (index) => {
+  // Moving from Data array to Trash array
+  const handleCheck = (index) => {
     const newData = [...data];
     const removed = newData.splice(index, 1);
     setData(newData);
@@ -79,7 +77,7 @@ export default function App() {
     localStorage.setItem("trash", JSON.stringify([...trash, removed[0]]));
   };
 
-  //Restore task logic
+  //moving from trash to data
   const handleRestore = (index) => {
     const newTrash = [...trash];
     const removed = newTrash.splice(index, 1);
@@ -125,7 +123,7 @@ export default function App() {
                   <div className="taskContainer" key={key}>
                     <button
                       id="none-checked"
-                      onClick={() => handleRemove(index)}
+                      onClick={() => handleCheck(index)}
                     >
                       <img src="./images/Vector.svg" />
                     </button>
