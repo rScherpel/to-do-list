@@ -6,6 +6,8 @@ import "moment/locale/pt-br";
 import Accordion from "./components/accordion";
 
 export default function App() {
+  
+  //Clock
   moment.tz.setDefault("America/Sao_Paulo");
   moment.locale("pt-br");
   const now = moment();
