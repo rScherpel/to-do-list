@@ -5,5 +5,10 @@
 
 .arrow {
   display: flex;
-  flex-direction: column;
+  position: absolute;
+  right: 42px;
+}
+
+.accordion-body {
+  font-size: 15px;
 }
