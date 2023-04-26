@@ -15,7 +15,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 ## Explaning the code
 
 ### Js: 
-This part basically consists of 7 sections,
+This part basically consists of 7 sections:<br>
 1st. Using the moment library to add a clock to the project;<br><br>
 2nd. A logic to make the white container slide animation.<br> Here I used a method, that when we click on the button to go to the create task section and back, we add and remove the word "active" in the classname of the container and the body, so the animation can be done entirely in css using this method different name.<br><br>
 3rd. It is the creation of the data array, which is where the tasks and all the task creation logic with the inputs are kept and saving it in localStorage; <br><br>
