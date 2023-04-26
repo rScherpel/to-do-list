@@ -5,7 +5,7 @@
   --white: #fff;
   --black: #000;
   --gray: #333;
-  --active-boody-bg: #f43648;
+  --active-body-bg: #f43648;
 }
 
 * {
@@ -31,7 +31,7 @@ body {
 }
 
 body.active {
-  background: var(--active-boody-bg);
+  background: var(--active-body-bg);
 }
 
 .container {
