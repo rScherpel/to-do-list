@@ -6,7 +6,6 @@ import "moment/locale/pt-br";
 import Accordion from "./components/accordion";
 
 export default function App() {
-  
   //Clock
   moment.tz.setDefault("America/Sao_Paulo");
   moment.locale("pt-br");
@@ -28,14 +27,9 @@ export default function App() {
       listBx.classList.remove("active");
       body.classList.remove("active");
     };
-    //to-do to done effect
-    const cardMovement = document.querySelector(".sendTaskBtn");
-    cardMovement.onclick = function () {
-      listBx.classList.add("active");
-    };
   }, []);
 
-  // To do list part
+  // Making a task
   const [data, setData] = useState(() => {
     const storedData = localStorage.getItem("data");
     return storedData ? JSON.parse(storedData) : [];
@@ -62,6 +56,8 @@ export default function App() {
     );
   };
 
+  //array for the tasks that are alredy made
+
   const [trash, setTrash] = useState([]);
 
   useEffect(() => {
@@ -72,6 +68,8 @@ export default function App() {
     }
   }, []);
 
+  //Moving to done logic
+
   const handleRemove = (index) => {
     const newData = [...data];
     const removed = newData.splice(index, 1);
@@ -79,12 +77,9 @@ export default function App() {
     setTrash([...trash, removed[0]]);
     localStorage.setItem("data", JSON.stringify(newData));
     localStorage.setItem("trash", JSON.stringify([...trash, removed[0]]));
-    console.log(
-      "Trash in localStorage:",
-      JSON.parse(localStorage.getItem("trash"))
-    );
   };
 
+  //Restore task logic
   const handleRestore = (index) => {
     const newTrash = [...trash];
     const removed = newTrash.splice(index, 1);
@@ -94,6 +89,7 @@ export default function App() {
     localStorage.setItem("data", JSON.stringify([...data, removed[0]]));
   };
 
+  //delete button
   const handleRemoveFromLocalStorage = (id) => {
     const storedData = JSON.parse(localStorage.getItem("data")) || [];
     const storedTrash = JSON.parse(localStorage.getItem("trash")) || [];
