@@ -178,15 +178,13 @@ button {
 .listBx .done-todo {
   position: absolute;
   left: 0;
+  margin-top: 0.5rem;
   width: 100%;
   transition: 0.5s;
   display: flex;
   align-items: center;
   justify-content: center;
   transition-delay: 0.25s;
-}
-
-.listBx .done-todo {
   color: var(--black);
   font-size: 1.2rem;
   font-weight: 500;
@@ -210,6 +208,7 @@ button {
   color: var(--black);
   font-size: 1.2rem;
   font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
 .hint-bx p{
@@ -223,7 +222,6 @@ button {
 }
 
 .image-container{
-  /* border: solid 1px black; */
   margin: 1.2rem 1rem 0rem 1rem;
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.2);
@@ -236,13 +234,12 @@ button {
   gap: 5rem;
 }
 
-/* estilização da lista de tarefas */
-
 .taskContainer {
-  width: 17rem;
+  width: 18.5rem;
   margin: 1rem;
   border-radius: 1rem;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   padding: 1rem;
   transition: 0.5s;
@@ -255,6 +252,11 @@ button {
 .taskContainer .texts{
   color: var(--black);
   font-size: 1rem;
+}
+
+.unique-remove{
+  position: absolute;
+  right: 72px;
 }
 
 /* estilização do accordion */
